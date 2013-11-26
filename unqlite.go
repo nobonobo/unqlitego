@@ -47,7 +47,7 @@ type Cursor struct {
 
 func init() {
 	C.unqlite_lib_init()
-	if C.unqlite_lib_is_threadsafe() != 1 {
+	if !IsThreadSafe() {
 		panic("unqlite library was not compiled for thread-safe option UNQLITE_ENABLE_THREADS=1")
 	}
 }
@@ -76,12 +76,6 @@ func (db *Database) Close() (err error) {
 		}
 		db.handle = nil
 	}
-	return
-}
-
-// Config ...
-func (db *Database) Config(operate int, args ...interface{}) (err error) {
-	err = errors.New("not implemented")
 	return
 }
 
@@ -300,14 +294,46 @@ func (curs *Cursor) Value() (value []byte, err error) {
 	return
 }
 
+// Shutdown ...
+func Shutdown() (err error) {
+	res := C.unqlite_lib_shutdown()
+	if res != C.UNQLITE_OK {
+		err = UnQLiteError(res)
+		return
+	}
+}
+
+// IsThreadSafe ...
+func IsThreadSafe() bool {
+	return C.unqlite_lib_is_threadsafe() == 1
+}
+
+// Version ...
+func Version() string {
+	return C.GoString(C.unqlite_lib_version())
+}
+
+// Signature ...
+func Signature() string {
+	return C.GoString(C.unqlite_lib_signature())
+}
+
+// Ident ...
+func Ident() string {
+	return C.GoString(C.unqlite_lib_ident())
+}
+
+// Copyright ...
+func Copyright() string {
+	return C.GoString(C.unqlite_lib_copyright())
+}
+
 /* TODO: implement
 
 // Database Engine Handle
 int unqlite_config(unqlite *pDb,int nOp,...);
 
 // Key/Value (KV) Store Interfaces
-int unqlite_kv_store_fmt(unqlite *pDb,const void *pKey,int nKeyLen,const char *zFormat,...);
-int unqlite_kv_append_fmt(unqlite *pDb,const void *pKey,int nKeyLen,const char *zFormat,...);
 int unqlite_kv_fetch_callback(unqlite *pDb,const void *pKey,
 	                    int nKeyLen,int (*xConsumer)(const void *,unsigned int,void *),void *pUserData);
 int unqlite_kv_config(unqlite *pDb,int iOp,...);
@@ -319,16 +345,7 @@ int unqlite_kv_cursor_data_callback(unqlite_kv_cursor *pCursor,int (*xConsumer)(
 // Utility interfaces
 int unqlite_util_load_mmaped_file(const char *zFile,void **ppMap,unqlite_int64 *pFileSize);
 int unqlite_util_release_mmaped_file(void *pMap,unqlite_int64 iFileSize);
-int unqlite_util_random_string(unqlite *pDb,char *zBuf,unsigned int buf_size);
-unsigned int unqlite_util_random_num(unqlite *pDb);
 
 // Global Library Management Interfaces
 int unqlite_lib_config(int nConfigOp,...);
-int unqlite_lib_init(void);
-int unqlite_lib_shutdown(void);
-int unqlite_lib_is_threadsafe(void);
-const char * unqlite_lib_version(void);
-const char * unqlite_lib_signature(void);
-const char * unqlite_lib_ident(void);
-const char * unqlite_lib_copyright(void);
 */
