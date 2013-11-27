@@ -8,7 +8,6 @@ package unqlitego
 import "C"
 
 import (
-	"errors"
 	"fmt"
 	"runtime"
 	"unsafe"
@@ -299,8 +298,8 @@ func Shutdown() (err error) {
 	res := C.unqlite_lib_shutdown()
 	if res != C.UNQLITE_OK {
 		err = UnQLiteError(res)
-		return
 	}
+	return
 }
 
 // IsThreadSafe ...

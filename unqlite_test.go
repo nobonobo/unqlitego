@@ -8,6 +8,28 @@ import (
 	"testing"
 )
 
+func Testライブラリ(t *testing.T) {
+	Describe(t, "正常系", func() {
+		Context("基本テスト", func() {
+			It("IsThreadSafe", func() {
+				Expect(IsThreadSafe()).To(Equal, true)
+			})
+			It("Version", func() {
+				Expect(Version()).To(Equal, "1.1.6")
+			})
+			It("Signature", func() {
+				Expect(Signature()).To(Equal, "unqlite/1.1.6")
+			})
+			It("Ident", func() {
+				Expect(Ident()).To(Equal, "unqlite:b172a1e2c3f62fb35c8e1fb2795121f82356cad6")
+			})
+			It("Copyright", func() {
+				Expect(Copyright()).To(Equal, "Copyright (C) Symisc Systems, S.U.A.R.L [Mrad Chems Eddine <chm@symisc.net>] 2012-2013, http://unqlite.org/")
+			})
+		})
+	})
+}
+
 func Testモジュール(t *testing.T) {
 	var db *Database
 	var src []byte
