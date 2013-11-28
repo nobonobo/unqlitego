@@ -9,10 +9,7 @@ Install
 ```sh
 go get -d github.com/nobonobo/unqlitego
 cd $GOPATH/src/github.com/nobonobo/unqlitego
-git submodule init
-git submodule update
-make
-go install
+make install
 ```
 
 Benchmark
