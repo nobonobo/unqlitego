@@ -1,11 +1,12 @@
 language: go
 
 go:
-  - 1.0
   - 1.1
   - tip
 
-install: make all
+install:
+  - go get github.com/r7kamura/gospel
+  - make install
 
 script:
-  - go test ./
+  - make test

@@ -1,7 +1,20 @@
 # for GNU make
+.PHONY: all build install test clean
 
-all: libunqlite.a
+all: build	
+
+build: libunqlite.a
 	go build
+
+install: libunqlite.a
+	go install
+
+clean:
+	rm -f libunqlite.a
+	rm -rf src/*
+
+test:
+	go test ./
 
 src/unqlite.c:
 	git submodule init
