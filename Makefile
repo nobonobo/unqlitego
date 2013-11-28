@@ -1,7 +1,7 @@
 # for GNU make
 
 all: libunqlite.a
-	go build
+	go install
 
 src/unqlite.c:
 	git submodule init
