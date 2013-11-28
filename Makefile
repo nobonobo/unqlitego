@@ -1,12 +1,12 @@
 # for GNU make
-.PHONY: all build test clean
+.PHONY: all build install test clean
 
 all: build	
 
 build: libunqlite.a
 	go build
 
-install:
+install: libunqlite.a
 	go install
 
 clean:
