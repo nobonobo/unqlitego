@@ -8,14 +8,14 @@ Install
 
 ```sh
 $ go get -d github.com/nobonobo/unqlitego
-$ make -C $GOPATH/src/github.com/nobonobo/unqlitego install
+$ make -C ${GOPATH/:*/}/src/github.com/nobonobo/unqlitego install
 ```
 
 Test
 ---------
 ```sh
 $ go get github.com/r7kamura/gospel
-$ make -C $GOPATH/src/github.com/nobonobo/unqlitego test
+$ make -C ${GOPATH/:*/}/src/github.com/nobonobo/unqlitego test
 ```
 
 Benchmark
@@ -23,7 +23,7 @@ Benchmark
 
 ```sh
 $ go get github.com/r7kamura/gospel
-$ cd $GOPATH/src/github.com/nobonobo/unqlitego
+$ cd ${GOPATH/:*/}/src/github.com/nobonobo/unqlitego
 $ go test -bench Bench*
 ```
 
