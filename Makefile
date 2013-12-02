@@ -3,14 +3,13 @@
 
 all: build	
 
-build: libunqlite.a
+build: src/unqlite.c
 	go build
 
-install: libunqlite.a
+install: src/unqlite.c
 	go install
 
 clean:
-	rm -f libunqlite.a
 	rm -rf src/*
 
 test:
@@ -19,7 +18,3 @@ test:
 src/unqlite.c:
 	git submodule init
 	git submodule update
-
-libunqlite.a: src/unqlite.c src/unqlite.h
-	gcc -c src/unqlite.c -I./src -DUNQLITE_ENABLE_THREADS=1
-	ar rv libunqlite.a unqlite.o

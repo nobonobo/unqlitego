@@ -1,8 +1,8 @@
 package unqlitego
 
 /*
-#cgo LDFLAGS: -L./ -lunqlite
-#include "./src/unqlite.h"
+#cgo CFLAGS: -DUNQLITE_ENABLE_THREADS=1 -Wno-unused-but-set-variable
+#include "./src/unqlite.c"
 #include <stdlib.h>
 */
 import "C"
