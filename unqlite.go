@@ -1,7 +1,8 @@
 package unqlitego
 
 /*
-#cgo CFLAGS: -DUNQLITE_ENABLE_THREADS=1 -Wno-unused-but-set-variable
+#cgo linux CFLAGS: -DUNQLITE_ENABLE_THREADS=1 -Wno-unused-but-set-variable
+#cgo darwin CFLAGS: -DUNQLITE_ENABLE_THREADS=1
 #include "./unqlite.h"
 #include <stdlib.h>
 */
