@@ -7,15 +7,15 @@ Install
 ---------
 
 ```sh
-$ go get -d github.com/nobonobo/unqlitego
-$ make -C ${GOPATH/:*/}/src/github.com/nobonobo/unqlitego install
+$ go get github.com/nobonobo/unqlitego
 ```
 
 Test
 ---------
 ```sh
 $ go get github.com/r7kamura/gospel
-$ make -C ${GOPATH/:*/}/src/github.com/nobonobo/unqlitego test
+$ cd ${GOPATH/:*/}/src/github.com/nobonobo/unqlitego
+$ go test .
 ```
 
 Benchmark
