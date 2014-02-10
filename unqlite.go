@@ -38,6 +38,11 @@ var errString = map[UnQLiteError]string{
 // Database ...
 type Database struct {
 	handle *C.unqlite
+
+	// By Providing Marshaller and Unmarshaller Functions we can marshal to BSON
+	// Rather then JSON without being dependant on BSON.
+	marshal   MarshalFunction
+	unmarshal UnmarshalFunction
 }
 
 // Cursor ...
