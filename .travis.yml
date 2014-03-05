@@ -6,6 +6,7 @@ go:
   - tip
 
 install:
+  - go get github.com/r7kamura/gospel
   - go install .
 
 script:
