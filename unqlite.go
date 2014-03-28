@@ -82,9 +82,19 @@ func (db *Database) Close() (err error) {
 
 // Store ...
 func (db *Database) Store(key, value []byte) (err error) {
+	var k, v unsafe.Pointer
+
+	if len(key) > 0 {
+		k = unsafe.Pointer(&key[0])
+	}
+
+	if len(value) > 0 {
+		v = unsafe.Pointer(&value[0])
+	}
+
 	res := C.unqlite_kv_store(db.handle,
-		unsafe.Pointer(&key[0]), C.int(len(key)),
-		unsafe.Pointer(&value[0]), C.unqlite_int64(len(value)))
+		k, C.int(len(key)),
+		v, C.unqlite_int64(len(value)))
 	if res == C.UNQLITE_OK {
 		return nil
 	}
@@ -93,9 +103,19 @@ func (db *Database) Store(key, value []byte) (err error) {
 
 // Append ...
 func (db *Database) Append(key, value []byte) (err error) {
+	var k, v unsafe.Pointer
+
+	if len(key) > 0 {
+		k = unsafe.Pointer(&key[0])
+	}
+
+	if len(value) > 0 {
+		v = unsafe.Pointer(&value[0])
+	}
+
 	res := C.unqlite_kv_append(db.handle,
-		unsafe.Pointer(&key[0]), C.int(len(key)),
-		unsafe.Pointer(&value[0]), C.unqlite_int64(len(value)))
+		k, C.int(len(key)),
+		v, C.unqlite_int64(len(value)))
 	if res != C.UNQLITE_OK {
 		err = UnQLiteError(res)
 	}
@@ -104,14 +124,20 @@ func (db *Database) Append(key, value []byte) (err error) {
 
 // Fetch ...
 func (db *Database) Fetch(key []byte) (value []byte, err error) {
+	var k unsafe.Pointer
+
+	if len(key) > 0 {
+		k = unsafe.Pointer(&key[0])
+	}
+
 	var n C.unqlite_int64
-	res := C.unqlite_kv_fetch(db.handle, unsafe.Pointer(&key[0]), C.int(len(key)), nil, &n)
+	res := C.unqlite_kv_fetch(db.handle, k, C.int(len(key)), nil, &n)
 	if res != C.UNQLITE_OK {
 		err = UnQLiteError(res)
 		return
 	}
 	value = make([]byte, int(n))
-	res = C.unqlite_kv_fetch(db.handle, unsafe.Pointer(&key[0]), C.int(len(key)), unsafe.Pointer(&value[0]), &n)
+	res = C.unqlite_kv_fetch(db.handle, k, C.int(len(key)), unsafe.Pointer(&value[0]), &n)
 	if res != C.UNQLITE_OK {
 		err = UnQLiteError(res)
 	}
@@ -120,7 +146,13 @@ func (db *Database) Fetch(key []byte) (value []byte, err error) {
 
 // Delete ...
 func (db *Database) Delete(key []byte) (err error) {
-	res := C.unqlite_kv_delete(db.handle, unsafe.Pointer(&key[0]), C.int(len(key)))
+	var k unsafe.Pointer
+
+	if len(key) > 0 {
+		k = unsafe.Pointer(&key[0])
+	}
+
+	res := C.unqlite_kv_delete(db.handle, k, C.int(len(key)))
 	if res != C.UNQLITE_OK {
 		err = UnQLiteError(res)
 	}
@@ -179,7 +211,13 @@ func (curs *Cursor) Close() (err error) {
 
 // Seek ...
 func (curs *Cursor) Seek(key []byte) (err error) {
-	res := C.unqlite_kv_cursor_seek(curs.handle, unsafe.Pointer(&key[0]), C.int(len(key)), C.UNQLITE_CURSOR_MATCH_EXACT)
+	var k unsafe.Pointer
+
+	if len(key) > 0 {
+		k = unsafe.Pointer(&key[0])
+	}
+
+	res := C.unqlite_kv_cursor_seek(curs.handle, k, C.int(len(key)), C.UNQLITE_CURSOR_MATCH_EXACT)
 	if res != C.UNQLITE_OK {
 		err = UnQLiteError(res)
 	}
@@ -188,7 +226,13 @@ func (curs *Cursor) Seek(key []byte) (err error) {
 
 // SeekLE ...
 func (curs *Cursor) SeekLE(key []byte) (err error) {
-	res := C.unqlite_kv_cursor_seek(curs.handle, unsafe.Pointer(&key[0]), C.int(len(key)), C.UNQLITE_CURSOR_MATCH_LE)
+	var k unsafe.Pointer
+
+	if len(key) > 0 {
+		k = unsafe.Pointer(&key[0])
+	}
+
+	res := C.unqlite_kv_cursor_seek(curs.handle, k, C.int(len(key)), C.UNQLITE_CURSOR_MATCH_LE)
 	if res != C.UNQLITE_OK {
 		err = UnQLiteError(res)
 	}
@@ -197,7 +241,13 @@ func (curs *Cursor) SeekLE(key []byte) (err error) {
 
 // SeekGE ...
 func (curs *Cursor) SeekGE(key []byte) (err error) {
-	res := C.unqlite_kv_cursor_seek(curs.handle, unsafe.Pointer(&key[0]), C.int(len(key)), C.UNQLITE_CURSOR_MATCH_GE)
+	var k unsafe.Pointer
+
+	if len(key) > 0 {
+		k = unsafe.Pointer(&key[0])
+	}
+
+	res := C.unqlite_kv_cursor_seek(curs.handle, k, C.int(len(key)), C.UNQLITE_CURSOR_MATCH_GE)
 	if res != C.UNQLITE_OK {
 		err = UnQLiteError(res)
 	}

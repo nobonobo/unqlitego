@@ -54,10 +54,19 @@ func Testモジュール(t *testing.T) {
 				err := db.Store([]byte("sample"), src)
 				Expect(err).To(NotExist)
 			})
+			It("Database.Store.ZeroByte", func() {
+				err := db.Store([]byte{}, src)
+				Expect(err).To(Exist)
+			})
 			It("Database.Fetch", func() {
 				dst, err := db.Fetch([]byte("sample"))
 				Expect(err).To(NotExist)
 				Expect(bytes.Compare(src, dst)).To(Equal, 0)
+			})
+			It("Database.Fetch.ZeroByte", func() {
+				value, err := db.Fetch([]byte{})
+				Expect(err).To(Exist)
+				Expect(value).To(NotExist)
 			})
 			It("Database.Append", func() {
 				err1 := db.Append([]byte("sample"), []byte(" append"))
