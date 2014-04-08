@@ -32,7 +32,29 @@ const (
 )
 
 var errString = map[UnQLiteError]string{
-	C.UNQLITE_NOMEM: "Out of memory",
+	C.UNQLITE_LOCKERR:        "Locking protocol error",
+	C.UNQLITE_READ_ONLY:      "Read only Key/Value storage engine",
+	C.UNQLITE_CANTOPEN:       "Unable to open the database file",
+	C.UNQLITE_FULL:           "Full database",
+	C.UNQLITE_VM_ERR:         "Virtual machine error",
+	C.UNQLITE_COMPILE_ERR:    "Compilation error",
+	C.UNQLITE_DONE:           "Operation done", // Not an error.
+	C.UNQLITE_CORRUPT:        "Corrupt pointer",
+	C.UNQLITE_NOOP:           "No such method",
+	C.UNQLITE_PERM:           "Permission error",
+	C.UNQLITE_EOF:            "End Of Input",
+	C.UNQLITE_NOTIMPLEMENTED: "Method not implemented by the underlying Key/Value storage engine",
+	C.UNQLITE_BUSY:           "The database file is locked",
+	C.UNQLITE_UNKNOWN:        "Unknown configuration option",
+	C.UNQLITE_EXISTS:         "Record exists",
+	C.UNQLITE_ABORT:          "Another thread have released this instance",
+	C.UNQLITE_INVALID:        "Invalid parameter",
+	C.UNQLITE_LIMIT:          "Database limit reached",
+	C.UNQLITE_NOTFOUND:       "No such record",
+	C.UNQLITE_LOCKED:         "Forbidden Operation",
+	C.UNQLITE_EMPTY:          "Empty record",
+	C.UNQLITE_IOERR:          "IO error",
+	C.UNQLITE_NOMEM:          "Out of memory",
 }
 
 // Database ...
