@@ -26,11 +26,6 @@ func (e UnQLiteError) Error() string {
 	return s
 }
 
-const (
-	// UnQLiteNoMemErr ...
-	UnQLiteNoMemErr UnQLiteError = UnQLiteError(C.UNQLITE_NOMEM)
-)
-
 var errString = map[UnQLiteError]string{
 	C.UNQLITE_LOCKERR:        "Locking protocol error",
 	C.UNQLITE_READ_ONLY:      "Read only Key/Value storage engine",
